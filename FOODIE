@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FoodRush - Creative Delivery Website</title>
+
+<style>
+/* ---------------------------------------------------------------------
+GLOBAL STYLE
+------------------------------------------------------------------------ */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #fffdf7;
+    overflow-x: hidden;
+    color: #333;
+}
+section { padding: 80px 60px; }
+h2 { text-align: center; font-size: 45px; margin-bottom: 40px; }
+
+
+/* ---------------------------------------------------------------------
+HEADER
+------------------------------------------------------------------------ */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(10px);
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid #e4dccc;
+}
+header h1 { 
+    margin: 0; 
+    font-size: 30px; 
+    color: #ff6a00; 
+    font-weight: 800;
+}
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+nav a:hover { color: #ff6a00; }
+
+/* ---------------------------------------------------------------------
+HERO SECTION
+------------------------------------------------------------------------ */
+.hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb86c, #ff9d41);
+    display: flex;
+    justify-content: space-between;
+    padding-top: 120px;
+    position: relative;
+    overflow: hidden;
+}
+.hero-content {
+    max-width: 43%;
+    color: #fff;
+}
+.hero-content h2 {
+    font-size: 60px;
+    margin: 0;
+}
+.hero-content p {
+    font-size: 22px;
+    margin: 20px 0 30px;
+}
+.cta-btn {
+    background: #fff;
+    color: #ff6a00;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    transition: .3s;
+}
+.cta-btn:hover { transform: scale(1.08); }
+
+/* Floating hero foods */
+.hero img {
+    position: absolute;
+    width: 300px;
+    animation: float 4s ease-in-out infinite;
+}
+.hero img:nth-child(2){ top: 18%; right: 12%; animation-delay:0s }
+.hero img:nth-child(3){ top: 55%; right: 30%; animation-delay:.8s }
+.hero img:nth-child(4){ top: 28%; right: 46%; animation-delay:1.6s }
+
+@keyframes float {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(5deg); }
+}
+
+/* ---------------------------------------------------------------------
+CATEGORIES CAROUSEL
+------------------------------------------------------------------------ */
+.categories {
+    text-align: center;
+}
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 30px;
+    padding: 20px;
+    scroll-behavior: smooth;
+}
+.carousel-item {
+    min-width: 180px;
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+.carousel-item:hover {
+    transform: scale(1.1);
+    background: #ff6a00;
+    color: #fff;
+}
+
+/* ---------------------------------------------------------------------
+MENU SECTION
+------------------------------------------------------------------------ */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 35px;
+}
+.card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    padding: 18px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: .6s;
+}
+.card img {
+    width: 100%; border-radius: 20px;
+}
+.card h3 { margin-top: 15px; }
+.card button {
+    background: #ff6a00; border: none;
+    padding: 10px 22px;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer; font-weight: bold;
+}
+.card.show { opacity: 1; transform: translateY(0); }
+
+/* ---------------------------------------------------------------------
+WHY CHOOSE US
+------------------------------------------------------------------------ */
+.why-boxes {
+    display: flex;
+    justify-content: space-between;
+    gap: 35px;
+}
+.why-box {
+    text-align: center;
+    flex: 1;
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    transition: .4s;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.09);
+}
+.why-box:hover { 
+    transform: translateY(-10px); 
+    background: #ffeed8;
+}
+.why-box img {
+    width: 100px;
+    animation: pulse 2.5s infinite;
+}
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ---------------------------------------------------------------------
+HOW IT WORKS
+------------------------------------------------------------------------ */
+.timeline {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 50px;
+}
+.step {
+    text-align: center;
+    width: 200px;
+}
+.step-circle {
+    width: 110px; height: 110px;
+    background: #ff6a00;
+    border-radius: 50%;
+    margin: auto;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 40px;
+    animation: pop 1.3s ease-in-out infinite;
+}
+@keyframes pop {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ---------------------------------------------------------------------
+TESTIMONIALS
+------------------------------------------------------------------------ */
+.testimonials {
+    background: #fff9f1;
+}
+.slider {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+.slide-row {
+    display: flex;
+    gap: 40px;
+    animation: slide 12s infinite linear;
+}
+.testimonial {
+    min-width: 350px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+@keyframes slide {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-60%); }
+    100% { transform: translateX(0); }
+}
+
+/* ---------------------------------------------------------------------
+DELIVERY ZONES MAP
+------------------------------------------------------------------------ */
+.map {
+    text-align: center;
+}
+.map img {
+    width: 60%;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.pulse-dot {
+    width: 20px; height: 20px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+    animation: pulse2 1.5s infinite;
+}
+@keyframes pulse2 {
+    0% { transform: scale(1); opacity: 1 }
+    100% { transform: scale(2); opacity: 0 }
+}
+
+/* ---------------------------------------------------------------------
+APP DOWNLOAD SECTION
+------------------------------------------------------------------------ */
+.app {
+    background: #ffe1c1;
+    text-align: center;
+    padding: 80px 40px;
+}
+.store-buttons img {
+    width: 180px;
+    margin: 15px;
+    cursor: pointer;
+    transition: .3s;
+}
+.store-buttons img:hover { transform: scale(1.1); }
+
+/* ---------------------------------------------------------------------
+FOOTER
+------------------------------------------------------------------------ */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* ---------------------------------------------------------------------
+POPUP
+------------------------------------------------------------------------ */
+#popup, #overlay {
+    transition: .4s;
+}
+#overlay {
+    position: fixed; inset:0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 900;
+}
+#popup {
+    position: fixed;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%) scale(0);
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 1000;
+}
+#popup.show { transform: translate(-50%,-50%) scale(1); }
+#overlay.show { display:block; }
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Foodie</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#why">Why Us</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#app">Download</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h2>Delicious Food,<br>Delivered Faster.</h2>
+        <p>Fresh meals delivered hot & fast — order in seconds.</p>
+        <button class="cta-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Order Now</button>
+    </div>
+
+    <img src="C:\Users\user\Desktop\AKASH-WEB\FOODIE\Images\Burger.png">
+    <img src="C:\Users\user\Desktop\AKASH-WEB\FOODIE\Images\Biriyani.png">
+    <img src="C:\Users\user\Desktop\AKASH-WEB\FOODIE\Images\Desserts.png">
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories">
+    <h2>Categories</h2>
+    <div class="carousel">
+        <div class="carousel-item">🍔 Burgers</div>
+        <div class="carousel-item">🍕 Pizza</div>
+        <div class="carousel-item">🍝 Pasta</div>
+        <div class="carousel-item">🥗 Healthy</div>
+        <div class="carousel-item">🍣 Sushi</div>
+        <div class="carousel-item">🍗 Chicken</div>
+        <div class="carousel-item">🍰 Desserts</div>
+        <div class="carousel-item">☕ Coffee</div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+    <h2>Popular Dishes</h2>
+    <div class="menu-grid">
+
+        <div class="card">
+            <img src="https://i.imgur.com/zYxDCQT.jpg">
+            <h3>Cheese Burger</h3>
+            <p>Loaded with premium cheddar & fresh veggies.</p>
+            <button onclick="openPopup()">Order</button>
+        </div>
+
+        <div class="card">
+            <img src="https://i.imgur.com/bWY1e3C.jpg">
+            <h3>Italian Pizza</h3>
+            <p>Fresh basil, mozzarella and crispy crust.</p>
+            <button onclick="openPopup()">Order</button>
+        </div>
+
+        <div class="card">
+            <img src="https://i.imgur.com/U8bREm5.jpg">
+            <h3>Sushi Platter</h3>
+            <p>Authentic salmon, tuna and maki rolls.</p>
+            <button onclick="openPopup()">Order</button>
+        </div>
+
+        <div class="card">
+            <img src="https://i.imgur.com/tksE1eP.jpg">
+            <h3>Pasta Alfredo</h3>
+            <p>Creamy, cheesy Italian Alfredo pasta.</p>
+            <button onclick="openPopup()">Order</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+    <h2>Why Choose FoodRush?</h2>
+    <div class="why-boxes">
+        <div class="why-box">
+            <img src="https://i.imgur.com/pN0RAqH.png">
+            <h3>Lightning Fast Delivery</h3>
+            <p>Food in under 30 minutes, always hot.</p>
+        </div>
+        <div class="why-box">
+            <img src="https://i.imgur.com/7O1uE3T.png">
+            <h3>Fresh Ingredients</h3>
+            <p>High-quality ingredients sourced daily.</p>
+        </div>
+        <div class="why-box">
+            <img src="https://i.imgur.com/OyizS2s.png">
+            <h3>Best Chefs</h3>
+            <p>Top-rated chefs across the country.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+    <h2>How It Works</h2>
+    <div class="timeline">
+        <div class="step">
+            <div class="step-circle">1</div>
+            <p>Select dishes</p>
+        </div>
+        <div class="step">
+            <div class="step-circle">2</div>
+            <p>Place order</p>
+        </div>
+        <div class="step">
+            <div class="step-circle">3</div>
+            <p>Track delivery</p>
+        </div>
+        <div class="step">
+            <div class="step-circle">4</div>
+            <p>Enjoy meal 😋</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="slider">
+        <div class="slide-row">
+            <div class="testimonial">“Fastest delivery ever. The food was steaming hot!” — Priya</div>
+            <div class="testimonial">“Best sushi in town!” — Alex</div>
+            <div class="testimonial">“Loved the pasta, rich and creamy!” — Riya</div>
+            <div class="testimonial">“Great experience. Highly recommended.” — John</div>
+        </div>
+    </div>
+</section>
+
+<!-- APP DOWNLOAD -->
+<section class="app" id="app">
+    <h2>Download Our App</h2>
+    <p>Order faster with our mobile app — available on both iOS and Android.</p>
+    <div class="store-buttons">
+        <img src="https://i.imgur.com/86i0hYx.png">
+        <img src="https://i.imgur.com/LP2w9cF.png">
+    </div>
+</section>
+
+<footer>
+    © 2025 FoodRush Delivery — All Rights Reserved.
+</footer>
+
+<!-- POPUP -->
+<div id="overlay"></div>
+<div id="popup">
+    <h3>Order Placed 🎉</h3>
+    <p>Your food is being prepared!</p>
+    <button onclick="closePopup()">OK</button>
+</div>
+
+<script>
+// SHOW CARDS ON SCROLL
+const cards = document.querySelectorAll(".card");
+window.addEventListener("scroll", () => {
+    cards.forEach(card => {
+        if (card.getBoundingClientRect().top < window.innerHeight - 50) {
+            card.classList.add("show");
+        }
+    });
+});
+
+// POPUP FUNCTIONS
+function openPopup() {
+    document.getElementById("popup").classList.add("show");
+    document.getElementById("overlay").classList.add("show");
+}
+function closePopup() {
+    document.getElementById("popup").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+}
+</script>
+
+</body>
+</html>
